@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RadioProvider } from "./contexts/RadioContext";
+import Popup from './Popup'; 
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,8 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <RadioProvider>
-        <main>{children}</main>
+        <RadioProvider>
+          <main>{children}</main>
+          <Popup /> {/* Her sayfada radyo popup'ı görünecek */}
         </RadioProvider>
       </body>
     </html>
