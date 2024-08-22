@@ -1,11 +1,35 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRadio } from './contexts/RadioContext';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
   const { selectedRadio, isPlaying, selectRadio, togglePlay } = useRadio();
+
+  // Radyo çalmaya başladığında alert gösterme
+  useEffect(() => {
+    if (isPlaying) {
+      alert('Radyo çalıyor, sayfayı kapatırsanız radyo duracaktır.');
+    }
+  }, [isPlaying]);
+
+  // Sayfa kapanırken uyarı gösterme
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isPlaying) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isPlaying]);
 
   return (
     <div>
